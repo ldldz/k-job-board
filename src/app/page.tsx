@@ -3,7 +3,15 @@ import Main from "@/components/home/Main";
 import SearchBar from "@/components/home/SearchBar";
 import { Separator } from "@/components/ui/separator";
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
+
   return (
     <div className="flex flex-col items-center">
       <Main />
@@ -11,7 +19,7 @@ export default function Home() {
         <SearchBar />
       </div>
       <Separator />
-      <JobCardsList />
+      <JobCardsList query={query} />
     </div>
   );
 }

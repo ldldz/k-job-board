@@ -2,9 +2,8 @@ import JobCard from "@/components/home/JobCard";
 import fetchJobs from "@/lib/data";
 import { Job } from "@/lib/definitions";
 
-export default async function JobCardsList() {
-  // 채용공고 리스트 패칭
-  const jobs: Job[] | undefined = await fetchJobs();
+export default async function JobCardsList({ query }: { query: string }) {
+  const jobs: Job[] | undefined = await fetchJobs(query);
 
   return (
     <div className="flex w-full flex-col items-center pt-4">
