@@ -7,10 +7,11 @@ export default function JobCard({
   title,
   employmentType,
   dueDate,
+  url,
 }: Job) {
   return (
     <Card className="p-2">
-      <div className="flex flex-row justify-between">
+      <a className="flex flex-row justify-between" href={url}>
         <div className="flex flex-col gap-1 p-2">
           <div className="text-sm">{company}</div>
           <h3 className="text-lg font-semibold">{title}</h3>
@@ -23,7 +24,7 @@ export default function JobCard({
         {dueDate && (
           <div className="self-center p-2 text-sm">{dueDate}까지</div>
         )}
-      </div>
+      </a>
     </Card>
   );
 }
