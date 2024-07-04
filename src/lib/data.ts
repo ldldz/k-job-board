@@ -1,7 +1,13 @@
 import { Job } from "./definitions";
 import clientPromise from "./mongodb";
 
-export default async function fetchJobs(searchValue?: string) {
+export default async function fetchJobs(
+  searchValue?: string,
+  currentPage: number = 1,
+) {
+  const PER_PAGE = 10;
+  const SKIP_NUMBER = PER_PAGE * (currentPage - 1);
+
   try {
     const client = await clientPromise;
     const coll = client.db("jobBoard").collection<Job>("jobs");
@@ -20,11 +26,13 @@ export default async function fetchJobs(searchValue?: string) {
               },
             },
           },
+          { $skip: SKIP_NUMBER },
+          { $limit: PER_PAGE },
         ])
         .toArray();
+    } else {
+      return coll.find({}).skip(SKIP_NUMBER).limit(PER_PAGE).toArray();
     }
-
-    return coll.find().toArray();
   } catch (e) {
     console.error(e);
   }
