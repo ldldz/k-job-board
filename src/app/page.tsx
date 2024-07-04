@@ -8,9 +8,11 @@ export default function Home({
 }: {
   searchParams?: {
     query?: string;
+    page?: string;
   };
 }) {
   const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page); // page가 없으면 0
 
   return (
     <div className="flex flex-col items-center">
@@ -19,7 +21,7 @@ export default function Home({
         <SearchBar />
       </div>
       <Separator />
-      <JobCardsList query={query} />
+      <JobCardsList query={query} currentPage={currentPage} />
     </div>
   );
 }
