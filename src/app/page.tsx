@@ -5,7 +5,7 @@ import SearchBar from "@/components/home/SearchBar";
 
 import { Separator } from "@/components/ui/separator";
 
-export default function Home({
+export default function Page({
   searchParams,
 }: {
   searchParams?: {
@@ -17,7 +17,7 @@ export default function Home({
   const query = searchParams?.query || "";
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center pt-6">
       <Main />
       <div className="flex w-full justify-center py-4">
         <SearchBar />
