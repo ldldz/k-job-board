@@ -30,7 +30,7 @@ export default function JobsPagination({
     paginationNumbers[0] - PAGINATION_LENGTH > 0
       ? paginationNumbers[0] - PAGINATION_LENGTH
       : 1;
-  const nextPage = currentPage + PAGINATION_LENGTH;
+  const nextPage = paginationNumbers[0] + PAGINATION_LENGTH;
 
   return (
     <div className="my-4">
