@@ -11,8 +11,11 @@ const pretendard = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "K-Job-Board",
+  title: "CareerLib",
   description: "Job board of korean start-up ",
+  openGraph: {
+    title: "CareerLib - 스타트업 채용 공고를 모아서 보여주는 플랫폼",
+  },
 };
 
 export default function RootLayout({

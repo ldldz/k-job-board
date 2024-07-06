@@ -60,7 +60,7 @@ export default function SubscribeModal() {
           <div className="flex flex-col gap-2">
             <Input
               type="email"
-              placeholder="abc@linkruit.com"
+              placeholder="abc@careerlib.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
