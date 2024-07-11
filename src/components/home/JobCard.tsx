@@ -1,6 +1,7 @@
 import { Job } from "@/lib/definitions";
 import { Badge } from "../ui/badge";
 import { Card } from "../ui/card";
+import { formatDateToKorean } from "@/lib/utils";
 
 export default function JobCard({
   company,
@@ -22,7 +23,9 @@ export default function JobCard({
           </ul>
         </div>
         {dueDate && (
-          <div className="self-center p-2 text-sm">{dueDate}까지</div>
+          <div className="self-center p-2 text-sm">
+            {formatDateToKorean(dueDate)}까지
+          </div>
         )}
       </a>
     </Card>
