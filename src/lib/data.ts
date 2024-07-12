@@ -1,10 +1,10 @@
 import { Job } from "./definitions";
 import clientPromise from "./mongodb";
 
-export default async function fetchJobs(
+export async function fetchJobs(
   searchValue?: string,
   currentPage: number = 1,
-) {
+): Promise<Job[] | undefined> {
   const PER_PAGE = 10;
   const SKIP_NUMBER = PER_PAGE * (currentPage - 1);
 
