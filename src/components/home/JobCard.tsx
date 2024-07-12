@@ -12,7 +12,7 @@ export default function JobCard({
 }: Job) {
   return (
     <Card className="p-2">
-      <a className="flex flex-row justify-between" href={url}>
+      <a className="flex flex-row justify-between" href={url} target="_blank">
         <div className="flex flex-col gap-1 p-2">
           <div className="text-sm">{company}</div>
           <h3 className="text-lg font-semibold">{title}</h3>
