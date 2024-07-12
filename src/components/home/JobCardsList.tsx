@@ -1,5 +1,5 @@
 import JobCard from "@/components/home/JobCard";
-import fetchJobs from "@/lib/data";
+import { fetchJobs } from "@/lib/data";
 import { Job } from "@/lib/definitions";
 
 export default async function JobCardsList({

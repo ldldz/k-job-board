@@ -10,12 +10,14 @@ import {
 export default function JobsPagination({
   searchParams,
   currentPage,
+  end,
 }: {
   searchParams?: {
     query?: string;
     page?: string;
   };
   currentPage: number;
+  end: number;
 }) {
   const PAGINATION_LENGTH = 5;
 
@@ -41,16 +43,21 @@ export default function JobsPagination({
               href={{ query: { ...searchParams, page: prevPage } }}
             />
           </PaginationItem>
-          {paginationNumbers.map((paginationNumber) => (
-            <PaginationItem key={paginationNumber}>
-              <PaginationLink
-                href={{ query: { ...searchParams, page: paginationNumber } }}
-                isActive={currentPage === paginationNumber}
-              >
-                {paginationNumber}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
+          {paginationNumbers.map(
+            (paginationNumber) =>
+              paginationNumber <= end && (
+                <PaginationItem key={paginationNumber}>
+                  <PaginationLink
+                    href={{
+                      query: { ...searchParams, page: paginationNumber },
+                    }}
+                    isActive={currentPage === paginationNumber}
+                  >
+                    {paginationNumber}
+                  </PaginationLink>
+                </PaginationItem>
+              ),
+          )}
 
           <PaginationItem>
             <PaginationNext

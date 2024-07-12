@@ -4,8 +4,9 @@ import Main from "@/components/home/Main";
 import SearchBar from "@/components/home/SearchBar";
 
 import { Separator } from "@/components/ui/separator";
+import { getJobsCount } from "@/lib/data";
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
   searchParams?: {
@@ -15,6 +16,7 @@ export default function Page({
 }) {
   const currentPage = Number(searchParams?.page || 1); // page가 없으면 1
   const query = searchParams?.query || "";
+  const jobsCount: number = await getJobsCount(query);
 
   return (
     <div className="flex flex-col items-center pt-6">
@@ -24,7 +26,11 @@ export default function Page({
       </div>
       <Separator />
       <JobCardsList query={query} currentPage={currentPage} />
-      <JobsPagination searchParams={searchParams} currentPage={currentPage} />
+      <JobsPagination
+        searchParams={searchParams}
+        currentPage={currentPage}
+        end={Math.ceil(jobsCount / 10)}
+      />
     </div>
   );
 }

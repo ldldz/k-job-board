@@ -37,3 +37,38 @@ export async function fetchJobs(
     console.error(e);
   }
 }
+
+export async function getJobsCount(searchValue?: string): Promise<number> {
+  try {
+    const client = await clientPromise;
+    const coll = client.db("jobBoard").collection<Job>("jobs");
+
+    if (searchValue) {
+      const result = await coll
+        .aggregate([
+          {
+            $search: {
+              index: "job_title_index",
+              text: {
+                query: searchValue,
+                path: {
+                  wildcard: "*",
+                },
+              },
+            },
+          },
+          {
+            $count: "total",
+          },
+        ])
+        .toArray();
+
+      return result[0]?.total || 0;
+    } else {
+      return await coll.countDocuments();
+    }
+  } catch (e) {
+    console.error(e);
+    return 0;
+  }
+}
