@@ -4,12 +4,12 @@ import { Job } from "@/lib/definitions";
 
 export default async function JobCardsList({
   query,
-  currentPage,
+  page,
 }: {
-  query: string;
-  currentPage: number;
+  query: string | string[];
+  page: number;
 }) {
-  const jobs: Job[] | undefined = await fetchJobs(query, currentPage);
+  const jobs: Job[] | undefined = await fetchJobs(query, page);
 
   return (
     <div className="flex w-full flex-col items-center pt-4">

@@ -2,7 +2,7 @@ import { Job } from "./definitions";
 import clientPromise from "./mongodb";
 
 export async function fetchJobs(
-  searchValue?: string,
+  searchValue?: string | string[],
   currentPage: number = 1,
 ): Promise<Job[] | undefined> {
   const PER_PAGE = 10;
@@ -38,7 +38,9 @@ export async function fetchJobs(
   }
 }
 
-export async function getJobsCount(searchValue?: string): Promise<number> {
+export async function getJobsCount(
+  searchValue?: string | string[],
+): Promise<number> {
   try {
     const client = await clientPromise;
     const coll = client.db("jobBoard").collection<Job>("jobs");
