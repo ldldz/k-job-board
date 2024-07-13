@@ -27,9 +27,8 @@ export default async function Page({
       <Separator />
       <JobCardsList query={query} currentPage={currentPage} />
       <JobsPagination
-        searchParams={searchParams}
-        currentPage={currentPage}
-        end={Math.ceil(jobsCount / 10)}
+        page={currentPage}
+        totalPageCount={Math.ceil(jobsCount / 10)}
       />
     </div>
   );

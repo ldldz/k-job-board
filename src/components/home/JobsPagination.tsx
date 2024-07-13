@@ -1,71 +1,45 @@
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+"use client";
+
+import { Pagination } from "@/components/ui/pagination";
+import { clamp } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 export default function JobsPagination({
-  searchParams,
-  currentPage,
-  end,
+  page,
+  totalPageCount,
 }: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-  currentPage: number;
-  end: number;
+  page: number;
+  totalPageCount: number;
 }) {
-  const PAGINATION_LENGTH = 5;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
 
-  const paginationNumbers = Array.from(
-    { length: PAGINATION_LENGTH },
-    (_, i) =>
-      Math.floor((currentPage - 1) / PAGINATION_LENGTH) * PAGINATION_LENGTH +
-      i +
-      1,
+      return params.toString();
+    },
+    [searchParams],
   );
-  const prevPage =
-    paginationNumbers[0] - PAGINATION_LENGTH > 0
-      ? paginationNumbers[0] - PAGINATION_LENGTH
-      : 1;
-  const nextPage = paginationNumbers[0] + PAGINATION_LENGTH;
 
   return (
     <div className="my-4">
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              href={{ query: { ...searchParams, page: prevPage } }}
-            />
-          </PaginationItem>
-          {paginationNumbers.map(
-            (paginationNumber) =>
-              paginationNumber <= end && (
-                <PaginationItem key={paginationNumber}>
-                  <PaginationLink
-                    href={{
-                      query: { ...searchParams, page: paginationNumber },
-                    }}
-                    isActive={currentPage === paginationNumber}
-                  >
-                    {paginationNumber}
-                  </PaginationLink>
-                </PaginationItem>
+      <Pagination
+        page={page}
+        totalPagesCount={totalPageCount}
+        paginationLength={5}
+        setPage={(nextPage) => {
+          router.push(
+            "?" +
+              createQueryString(
+                "page",
+                clamp(nextPage, 1, totalPageCount).toString(),
               ),
-          )}
-
-          <PaginationItem>
-            <PaginationNext
-              href={{ query: { ...searchParams, page: nextPage } }}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+          );
+        }}
+      />
     </div>
   );
 }
