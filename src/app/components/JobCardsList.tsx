@@ -1,4 +1,4 @@
-import JobCard from "@/components/home/JobCard";
+import JobCard from "@/app/components/JobCard";
 import { fetchJobs } from "@/lib/data";
 import { Job } from "@/lib/definitions";
 

@@ -1,6 +1,7 @@
+import { Badge } from "@/components/badge";
+import { Card } from "@/components/card";
 import { Job } from "@/lib/definitions";
-import { Badge } from "../ui/badge";
-import { Card } from "../ui/card";
+
 import { formatDateToKorean } from "@/lib/utils";
 
 export default function JobCard({

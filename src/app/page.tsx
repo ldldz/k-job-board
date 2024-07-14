@@ -1,5 +1,5 @@
-import { JobBoard, Main, SearchBar } from "@/components/home";
-import { Separator } from "@/components/ui/separator";
+import { JobBoard, Main, SearchBar } from "@/app/components";
+import { Separator } from "@/components/separator";
 
 export default function Page({
   searchParams,

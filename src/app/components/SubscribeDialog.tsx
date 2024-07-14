@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Badge } from "../ui/badge";
+} from "@/components/dialog";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
+import { Badge } from "@/components/badge";
 import { useState } from "react";
 
 const jobCategories = [

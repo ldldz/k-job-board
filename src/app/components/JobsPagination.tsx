@@ -1,6 +1,6 @@
 "use client";
 
-import { Pagination } from "@/components/ui/pagination";
+import { Pagination } from "@/components/pagination";
 import { clamp } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
