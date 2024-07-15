@@ -1,76 +1,51 @@
-import { Job } from "./definitions";
-import clientPromise from "./mongodb";
+import { createClient } from "@/utils/supabase/server";
+import { formatSearchString } from "./utils";
+import { Tables } from "@/types/supabase";
+
+const supabase = createClient();
 
 export async function fetchJobs(
   searchValue?: string | string[],
   currentPage: number = 1,
-): Promise<Job[] | undefined> {
+): Promise<Tables<"job_posts">[] | null> {
   const PER_PAGE = 10;
   const SKIP_NUMBER = PER_PAGE * (currentPage - 1);
 
-  try {
-    const client = await clientPromise;
-    const coll = client.db("jobBoard").collection<Job>("jobs");
+  let query = supabase
+    .from("job_posts")
+    .select("*")
+    .range(SKIP_NUMBER, SKIP_NUMBER + PER_PAGE - 1);
 
-    if (searchValue) {
-      return coll
-        .aggregate<Job>([
-          {
-            $search: {
-              index: "job_title_index",
-              text: {
-                query: searchValue,
-                path: {
-                  wildcard: "*",
-                },
-              },
-            },
-          },
-          { $skip: SKIP_NUMBER },
-          { $limit: PER_PAGE },
-        ])
-        .toArray();
-    } else {
-      return coll.find({}).skip(SKIP_NUMBER).limit(PER_PAGE).toArray();
-    }
-  } catch (e) {
-    console.error(e);
+  if (searchValue) {
+    query = query.textSearch("title", formatSearchString(searchValue));
   }
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error("Error fetching job posts:", error);
+    throw error;
+  }
+
+  return data;
 }
 
 export async function getJobsCount(
   searchValue?: string | string[],
-): Promise<number> {
-  try {
-    const client = await clientPromise;
-    const coll = client.db("jobBoard").collection<Job>("jobs");
+): Promise<number | null> {
+  let query = supabase
+    .from("job_posts")
+    .select("*", { count: "exact", head: true });
 
-    if (searchValue) {
-      const result = await coll
-        .aggregate([
-          {
-            $search: {
-              index: "job_title_index",
-              text: {
-                query: searchValue,
-                path: {
-                  wildcard: "*",
-                },
-              },
-            },
-          },
-          {
-            $count: "total",
-          },
-        ])
-        .toArray();
-
-      return result[0]?.total || 0;
-    } else {
-      return await coll.countDocuments();
-    }
-  } catch (e) {
-    console.error(e);
-    return 0;
+  if (searchValue) {
+    query = query.textSearch("title", formatSearchString(searchValue));
   }
+
+  const { count, error } = await query;
+
+  if (error) {
+    console.error("Error fetching job posts count:", error);
+    throw error;
+  }
+  return count;
 }

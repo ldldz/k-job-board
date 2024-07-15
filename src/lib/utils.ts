@@ -22,3 +22,7 @@ export function clamp(value: number, min: number, max: number): number {
     return value;
   }
 }
+
+export function formatSearchString(value: string | string[]): string {
+  return Array.isArray(value) ? value.join("|") : value.split(" ").join("|");
+}

@@ -11,7 +11,7 @@ const JobBoard = async ({
 }) => {
   const page = Number(searchParams?.page || 1); // page가 없으면 1
   const query = searchParams?.query || "";
-  const jobsCount: number = await getJobsCount(query);
+  const jobsCount: number = (await getJobsCount(query)) || 0;
 
   return (
     <>
