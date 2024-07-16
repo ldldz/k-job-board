@@ -2,15 +2,13 @@ import { createClient } from "@/utils/supabase/server";
 import { formatSearchString } from "./utils";
 import { Tables } from "@/types/supabase";
 
-const supabase = createClient();
-
 export async function fetchJobs(
   searchValue?: string | string[],
   currentPage: number = 1,
 ): Promise<Tables<"job_posts">[] | null> {
+  const supabase = createClient();
   const PER_PAGE = 10;
   const SKIP_NUMBER = PER_PAGE * (currentPage - 1);
-
   let query = supabase
     .from("job_posts")
     .select("*")
@@ -33,6 +31,7 @@ export async function fetchJobs(
 export async function getJobsCount(
   searchValue?: string | string[],
 ): Promise<number | null> {
+  const supabase = createClient();
   let query = supabase
     .from("job_posts")
     .select("*", { count: "exact", head: true });
