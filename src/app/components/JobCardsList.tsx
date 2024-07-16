@@ -1,6 +1,7 @@
 import JobCard from "@/app/components/JobCard";
 import { fetchJobs } from "@/lib/data";
 import { Job } from "@/lib/definitions";
+import { Tables } from "@/types/supabase";
 
 export default async function JobCardsList({
   query,
@@ -9,7 +10,7 @@ export default async function JobCardsList({
   query: string | string[];
   page: number;
 }) {
-  const jobs: Job[] | undefined = await fetchJobs(query, page);
+  const jobs: Tables<"job_posts">[] | null = await fetchJobs(query, page);
 
   return (
     <div className="flex w-full flex-col items-center pt-4">
