@@ -10,7 +10,7 @@ export async function signIn(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: `${process.env.BASE_URL}/auth/callback`,
     },
   });
 
@@ -34,5 +34,5 @@ export async function signOut() {
     console.warn("No session found, user might already be logged out.");
   }
 
-  redirect("http://localhost:3000");
+  redirect(`${process.env.BASE_URL}`);
 }
