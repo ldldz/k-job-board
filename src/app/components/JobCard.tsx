@@ -7,19 +7,16 @@ import { Tables } from "@/types/supabase";
 
 export default function JobCard({
   category,
-  company_id,
-  created_at,
+  company_name,
   due_date,
-  id,
   title,
-  updated_at,
   url,
-}: Tables<"job_posts">) {
+}: Tables<"job_post_details">) {
   return (
     <Card className="p-2">
-      <a className="flex flex-row justify-between" href={url} target="_blank">
+      <a className="flex flex-row justify-between" href={url || '/'} target="_blank">
         <div className="flex flex-col gap-1 p-2">
-          <div className="text-sm">{company_id}</div>
+          <div className="text-sm">{company_name}</div>
           <h3 className="text-lg font-semibold">{title}</h3>
           <ul className="flex gap-1">
             <li>

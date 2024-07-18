@@ -5,12 +5,12 @@ import { Tables } from "@/types/supabase";
 export async function fetchJobs(
   searchValue?: string | string[],
   currentPage: number = 1,
-): Promise<Tables<"job_posts">[] | null> {
+): Promise<Tables<"job_post_details">[] | null> {
   const supabase = createClient();
   const PER_PAGE = 10;
   const SKIP_NUMBER = PER_PAGE * (currentPage - 1);
   let query = supabase
-    .from("job_posts")
+    .from("job_post_details")
     .select("*")
     .range(SKIP_NUMBER, SKIP_NUMBER + PER_PAGE - 1);
 
