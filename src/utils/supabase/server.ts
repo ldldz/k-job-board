@@ -27,6 +27,11 @@ export function createClient() {
           }
         },
       },
+      auth: {
+        autoRefreshToken: false,
+        persistSession: true,
+        detectSessionInUrl: true,
+      },
     },
   );
 }
