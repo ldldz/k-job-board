@@ -1,6 +1,9 @@
+"use server";
+
 import { createClient } from "@/utils/supabase/server";
 import { formatSearchString } from "./utils";
 import { Tables } from "@/types/supabase";
+import { revalidatePath } from "next/cache";
 
 export async function fetchJobs(
   searchValue?: string | string[],
@@ -28,13 +31,9 @@ export async function fetchJobs(
   return data;
 }
 
-export async function getJobsCount(
-  searchValue?: string | string[],
-): Promise<number | null> {
+export async function getJobsCount(searchValue?: string | string[]): Promise<number | null> {
   const supabase = createClient();
-  let query = supabase
-    .from("job_posts")
-    .select("*", { count: "exact", head: true });
+  let query = supabase.from("job_posts").select("*", { count: "exact", head: true });
 
   if (searchValue) {
     query = query.textSearch("title", formatSearchString(searchValue));
@@ -47,4 +46,45 @@ export async function getJobsCount(
     throw error;
   }
   return count;
+}
+
+export async function getBookmarks(): Promise<Tables<"bookmarks">[]> {
+  const supabase = createClient();
+  const { data: bookmarks, error } = await supabase.from("bookmarks").select("*");
+
+  if (error) {
+    console.error("Error fetching bookmarks:", error);
+    throw error;
+  }
+
+  return bookmarks;
+}
+
+export async function insertBookmark(jobPostID: string) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("bookmarks")
+    .insert([{ job_post_id: jobPostID }])
+    .select();
+
+  if (error) {
+    console.error("Error fetching bookmarks:", error);
+    throw error;
+  }
+
+  revalidatePath("/");
+
+  return data;
+}
+
+export async function deleteBookmark(jobPostID: string) {
+  const supabase = createClient();
+
+  const { error } = await supabase.from("bookmarks").delete().eq("job_post_id", jobPostID);
+
+  if (error) {
+    console.error("Error fetching bookmarks:", error);
+    throw error;
+  }
+  revalidatePath("/");
 }

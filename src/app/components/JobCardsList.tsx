@@ -1,6 +1,5 @@
 import JobCard from "@/app/components/JobCard";
-import { fetchJobs } from "@/lib/data";
-import { Job } from "@/lib/definitions";
+import { fetchJobs, getBookmarks } from "@/lib/data";
 import { Tables } from "@/types/supabase";
 
 export default async function JobCardsList({
@@ -10,15 +9,17 @@ export default async function JobCardsList({
   query: string | string[];
   page: number;
 }) {
-  const jobs: Tables<"job_post_details">[] | null = await fetchJobs(query, page);
+  const jobPosts: Tables<"job_post_details">[] | null = await fetchJobs(query, page);
+  const bookmarks: Tables<"bookmarks">[] = await getBookmarks();
+  const bookmarkedJobPostIDs = bookmarks.map(({ job_post_id }) => job_post_id);
 
   return (
     <div className="flex w-full flex-col items-center pt-4">
       <ul className="flex w-[95%] flex-col gap-2 lg:w-[75%] xl:w-[60%]">
-        {jobs &&
-          jobs.map((job, i) => (
-            <li key={i}>
-              <JobCard {...job} />
+        {jobPosts &&
+          jobPosts.map((jobPost) => (
+            <li key={jobPost.id}>
+              <JobCard {...jobPost} isBookmarked={bookmarkedJobPostIDs.includes(jobPost.id)} />
             </li>
           ))}
       </ul>
