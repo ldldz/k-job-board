@@ -88,3 +88,19 @@ export async function deleteBookmark(jobPostID: string) {
   }
   revalidatePath("/");
 }
+
+export async function getBookmarkedJobPosts() {
+  const supabase = createClient();
+  const bookmarkedJobPostIDs = (await getBookmarks()).map(({ job_post_id }) => job_post_id);
+  const { data, error } = await supabase
+    .from("job_post_details")
+    .select("*")
+    .in("id", bookmarkedJobPostIDs);
+
+  if (error) {
+    console.error("Error fetching bookmarked job posts:", error);
+    throw error;
+  }
+
+  return data;
+}

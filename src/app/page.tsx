@@ -1,6 +1,6 @@
 import { JobBoard, Main, SearchBar } from "@/app/components";
-import { Button } from "@/components/button";
-import { Separator } from "@/components/separator";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Suspense } from "react";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
@@ -20,14 +20,14 @@ export default async function Page({
     <Suspense>
       <div className="flex flex-col items-center">
         <div className="w-full">
-          <nav className="max-w-8xl mx-auto flex justify-end px-8 py-4">
+          <nav className="mx-auto flex max-w-8xl justify-end px-8 py-4">
             {!data.user ? (
               <Button asChild>
                 <Link href={"/login"}>로그인</Link>
               </Button>
             ) : (
               <div>
-                <Link href={"/login"}>{data.user.user_metadata.name}</Link>
+                <Link href={"/my"}>{data.user.user_metadata.name}</Link>
               </div>
             )}
           </nav>
