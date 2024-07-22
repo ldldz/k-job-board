@@ -1,6 +1,6 @@
 "use client";
 
-import { Pagination } from "@/components/pagination";
+import { Pagination } from "@/components/ui/pagination";
 import { clamp } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -32,11 +32,7 @@ export default function JobsPagination({
         paginationLength={5}
         setPage={(nextPage) => {
           router.push(
-            "?" +
-              createQueryString(
-                "page",
-                clamp(nextPage, 1, totalPageCount).toString(),
-              ),
+            "?" + createQueryString("page", clamp(nextPage, 1, totalPageCount).toString()),
           );
         }}
       />

@@ -1,8 +1,8 @@
-import { Badge } from "@/components/badge";
-import { Card } from "@/components/card";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { formatDateToKorean } from "@/lib/utils";
 import { Tables } from "@/types/supabase";
-import BookmarkButton from "./BookmarkButton";
+import BookmarkButton from "@/components/BookmarkButton";
 
 type JobCardProps = Tables<"job_post_details"> & { isBookmarked: boolean };
 

@@ -1,13 +1,7 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import { signIn, signOut } from "./actions";
 import { createClient } from "@/utils/supabase/server";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function LoginPage() {
   const supabase = createClient();
@@ -20,16 +14,11 @@ export default async function LoginPage() {
           <>
             <CardHeader>
               <CardTitle>로그인</CardTitle>
-              <CardDescription>
-                Careerlib에 로그인하고 채용 정보를 받아보세요!
-              </CardDescription>
+              <CardDescription>Careerlib에 로그인하고 채용 정보를 받아보세요!</CardDescription>
             </CardHeader>
             <CardContent className="flex justify-center">
               <form>
-                <Button
-                  className="bg-yellow-300 text-black"
-                  formAction={signIn}
-                >
+                <Button className="bg-yellow-300 text-black" formAction={signIn}>
                   카카오로 로그인
                 </Button>
               </form>
