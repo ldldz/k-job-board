@@ -1,5 +1,4 @@
 import Link from "next/link";
-import SubscribeModal from "./SubscribeDialog";
 
 export default function Main() {
   return (
@@ -9,9 +8,6 @@ export default function Main() {
           <Link href="/">CareerLib🧑‍💻</Link>
         </h1>
         <div>스타트업의 채용공고를 한곳에서 만나보세요</div>
-        <div className="mt-8">
-          <SubscribeModal />
-        </div>
       </div>
     </main>
   );
