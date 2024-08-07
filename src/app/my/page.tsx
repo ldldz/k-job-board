@@ -3,12 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { getBookmarkedJobPosts } from "@/lib/data";
-import { formatDateToKorean } from "@/lib/utils";
+import { cn, formatDateToKorean } from "@/lib/utils";
 import BookmarkButton from "@/components/BookmarkButton";
 import Link from "next/link";
 import { Tables } from "@/types/supabase";
+import { AlertCircle } from "lucide-react";
 
-export default async function UserPage() {
+export default async function MyPage() {
   const supabase = createClient();
   const {
     data: { user },
@@ -22,25 +23,14 @@ export default async function UserPage() {
   const bookmarkedJobPosts: Tables<"job_post_details">[] = await getBookmarkedJobPosts();
 
   return (
-    <div className="min-h-screen px-4 py-6 sm:p-8">
-      <div className="mx-auto max-w-3xl">
-        <Header title="마이페이지" />
-        <Section title="사용자 정보">
-          <UserInfoCard avatar_url={avatar_url} name={name} email={email} />
-        </Section>
-        <Section title="북마크한 채용공고">
-          <BookmarkedJobList jobPosts={bookmarkedJobPosts} />
-        </Section>
-      </div>
-    </div>
-  );
-}
-
-function Header({ title }: { title: string }) {
-  return (
-    <header className="mb-8 flex items-center justify-between">
-      <h1 className="text-3xl font-semibold text-gray-900">{title}</h1>
-    </header>
+    <>
+      <Section title="사용자 정보">
+        <UserInfoCard avatar_url={avatar_url} name={name} email={email} />
+      </Section>
+      <Section title="북마크한 채용공고">
+        <BookmarkedJobList jobPosts={bookmarkedJobPosts} />
+      </Section>
+    </>
   );
 }
 
@@ -90,20 +80,40 @@ function BookmarkedJobList({ jobPosts }: { jobPosts: Tables<"job_post_details">[
   );
 }
 
-function JobPostCard({ id, title, company_name, due_date, url }: Tables<"job_post_details">) {
+function JobPostCard({
+  id,
+  title,
+  company_name,
+  due_date,
+  url,
+  is_expired,
+}: Tables<"job_post_details">) {
   return (
-    <Card className="relative transition-shadow duration-200 last:mb-0 hover:shadow-md">
-      <Link href={url as string}>
-        <CardContent className="p-4">
-          <h3 className="font-semibold text-gray-900">{title}</h3>
-          <p className="text-sm text-gray-600">{company_name}</p>
-          {due_date && (
-            <p className="text-xs text-gray-500">
-              마감일: {formatDateToKorean(new Date(due_date))}
-            </p>
-          )}
-        </CardContent>
-      </Link>
+    <Card
+      className={cn(
+        "relative",
+        !is_expired && "transition-shadow duration-200 last:mb-0 hover:shadow-md",
+      )}
+    >
+      <div className={is_expired ? "opacity-50" : ""}>
+        <Link href={is_expired ? "" : (url as string)}>
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-gray-900">{title}</h3>
+            <p className="text-sm text-gray-600">{company_name}</p>
+            {due_date && (
+              <p className="text-xs text-gray-500">
+                마감일: {formatDateToKorean(new Date(due_date))}
+              </p>
+            )}
+            {is_expired && (
+              <p className="mt-1 flex items-center text-xs text-red-500">
+                <AlertCircle className="mr-1 h-3 w-3" />
+                만료된 공고입니다.
+              </p>
+            )}
+          </CardContent>
+        </Link>
+      </div>
       <BookmarkButton key={id} jobPostID={id as string} isBookmarked={true} />
     </Card>
   );
