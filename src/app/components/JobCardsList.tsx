@@ -19,7 +19,10 @@ export default async function JobCardsList({
         {jobPosts &&
           jobPosts.map((jobPost) => (
             <li key={jobPost.id}>
-              <JobCard {...jobPost} isBookmarked={bookmarkedJobPostIDs.includes(jobPost.id)} />
+              <JobCard
+                {...jobPost}
+                isBookmarked={bookmarkedJobPostIDs.includes(jobPost.id as string)}
+              />
             </li>
           ))}
       </ul>
