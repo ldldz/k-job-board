@@ -15,6 +15,7 @@ export async function fetchJobs(
   let query = supabase
     .from("job_post_details")
     .select("*")
+    .eq("is_expired", "false")
     .range(SKIP_NUMBER, SKIP_NUMBER + PER_PAGE - 1);
 
   if (searchValue) {
@@ -33,7 +34,10 @@ export async function fetchJobs(
 
 export async function getJobsCount(searchValue?: string | string[]): Promise<number | null> {
   const supabase = createClient();
-  let query = supabase.from("job_posts").select("*", { count: "exact", head: true });
+  let query = supabase
+    .from("job_posts")
+    .select("*", { count: "exact", head: true })
+    .eq("is_expired", "false");
 
   if (searchValue) {
     query = query.textSearch("title", formatSearchString(searchValue));

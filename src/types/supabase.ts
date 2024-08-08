@@ -36,22 +36,22 @@ export type Database = {
     Tables: {
       bookmarks: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: number
-          job_post_id: string | null
-          user_id: string | null
+          job_post_id: string
+          user_id: string
         }
         Insert: {
-          created_at?: string | null
-          id?: never
-          job_post_id?: string | null
-          user_id?: string | null
+          created_at?: string
+          id?: number
+          job_post_id: string
+          user_id?: string
         }
         Update: {
-          created_at?: string | null
-          id?: never
-          job_post_id?: string | null
-          user_id?: string | null
+          created_at?: string
+          id?: number
+          job_post_id?: string
+          user_id?: string
         }
         Relationships: [
           {
@@ -105,6 +105,7 @@ export type Database = {
           created_at: string
           due_date: string | null
           id: string
+          is_expired: boolean
           title: string
           updated_at: string
           url: string
@@ -115,6 +116,7 @@ export type Database = {
           created_at?: string
           due_date?: string | null
           id: string
+          is_expired?: boolean
           title: string
           updated_at: string
           url: string
@@ -125,6 +127,7 @@ export type Database = {
           created_at?: string
           due_date?: string | null
           id?: string
+          is_expired?: boolean
           title?: string
           updated_at?: string
           url?: string
@@ -154,6 +157,7 @@ export type Database = {
           company_name: string | null
           due_date: string | null
           id: string | null
+          is_expired: boolean | null
           title: string | null
           url: string | null
         }
