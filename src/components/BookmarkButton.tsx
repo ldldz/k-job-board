@@ -1,7 +1,9 @@
 "use client";
 
 import { deleteBookmark, insertBookmark } from "@/lib/data";
+import { createClient } from "@/utils/supabase/client";
 import { Bookmark } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function BookmarkButton({
@@ -11,8 +13,19 @@ export default function BookmarkButton({
   jobPostID: string;
   isBookmarked: boolean;
 }) {
+  const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState<boolean>(initialIsBookmarked);
   const toggleBookmark = async () => {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
     setIsBookmarked((prev) => !prev);
 
     if (isBookmarked) {

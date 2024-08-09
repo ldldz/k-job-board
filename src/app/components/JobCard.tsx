@@ -34,7 +34,7 @@ export default function JobCard({
         )}
       </a>
       {/* TODO: postgresql의 view에 not null이 적용되지 않아 id type에 null이 허용됨 */}
-      <BookmarkButton isBookmarked={isBookmarked} jobPostID={id as string} />
+      <BookmarkButton key={+isBookmarked} isBookmarked={isBookmarked} jobPostID={id as string} />
     </Card>
   );
 }
