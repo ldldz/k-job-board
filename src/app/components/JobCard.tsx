@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatDateToKorean } from "@/lib/utils";
 import { Tables } from "@/types/supabase";
@@ -8,7 +7,6 @@ type JobCardProps = Tables<"job_post_details"> & { isBookmarked: boolean };
 
 export default function JobCard({
   id,
-  category,
   company_name,
   due_date,
   title,
@@ -20,12 +18,7 @@ export default function JobCard({
       <a className="flex justify-between" href={url || "/"} target="_blank">
         <div className="flex flex-col gap-1 p-2">
           <div className="text-sm">{company_name}</div>
-          <h3 className="text-lg font-semibold">{title}</h3>
-          <ul className="flex gap-1">
-            <li>
-              <Badge variant="outline">{category}</Badge>
-            </li>
-          </ul>
+          <h3 className="pb-2 text-lg font-semibold">{title}</h3>
         </div>
         {due_date && (
           <div className="self-center p-2 text-sm">
