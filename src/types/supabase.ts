@@ -82,18 +82,21 @@ export type Database = {
           created_at: string | null
           id: number
           name: string
+          signing_bonus: number | null
           url: string | null
         }
         Insert: {
           created_at?: string | null
           id?: never
           name: string
+          signing_bonus?: number | null
           url?: string | null
         }
         Update: {
           created_at?: string | null
           id?: never
           name?: string
+          signing_bonus?: number | null
           url?: string | null
         }
         Relationships: []
@@ -158,6 +161,7 @@ export type Database = {
           due_date: string | null
           id: string | null
           is_expired: boolean | null
+          signing_bonus: number | null
           title: string | null
           url: string | null
         }
