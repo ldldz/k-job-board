@@ -2,23 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function SearchBar() {
   const [searchParam, setSearchParam] = useState<string>("");
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
 
   function handleSearch(term: string) {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     if (term) {
       params.set("query", term);
     } else {
       params.delete("query");
     }
-    replace(`${pathname}?${params.toString()}`);
+    router.push("/?" + params.toString());
   }
 
   return (
