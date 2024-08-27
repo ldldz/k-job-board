@@ -14,6 +14,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signOut } from "./login/actions";
 import { LogOut } from "lucide-react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const pretendard = localFont({
   src: "../static/fonts/PretendardVariable.woff2",
@@ -103,6 +104,7 @@ export default async function RootLayout({
           </div>
         </footer>
         <Analytics />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
       </body>
     </html>
   );
