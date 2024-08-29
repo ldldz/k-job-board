@@ -6,7 +6,7 @@ import { getBookmarkedJobPosts } from "@/lib/data";
 import { cn, formatDateToKorean } from "@/lib/utils";
 import BookmarkButton from "@/components/BookmarkButton";
 import Link from "next/link";
-import { Tables } from "@/types/supabase";
+import { Tables } from "@/lib/supabase/types";
 import { AlertCircle } from "lucide-react";
 
 export default async function MyPage() {

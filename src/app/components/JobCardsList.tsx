@@ -1,6 +1,6 @@
 import JobCard from "@/app/components/JobCard";
 import { fetchJobs, getBookmarks } from "@/lib/data";
-import { Tables } from "@/types/supabase";
+import { Tables } from "@/lib/supabase/types";
 
 export default async function JobCardsList({
   query,

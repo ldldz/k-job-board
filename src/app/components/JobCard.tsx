@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { formatDateToKorean } from "@/lib/utils";
-import { Tables } from "@/types/supabase";
+import { Tables } from "@/lib/supabase/types";
 import BookmarkButton from "@/components/BookmarkButton";
 
 type JobCardProps = Tables<"job_post_details"> & { isBookmarked: boolean };

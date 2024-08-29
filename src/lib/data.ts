@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { formatSearchString } from "./utils";
-import { Tables } from "@/types/supabase";
+import { Tables } from "./supabase/types";
 import { revalidatePath } from "next/cache";
 
 export async function fetchJobs(

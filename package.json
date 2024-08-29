@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen": "supabase gen types typescript --linked > src/types/supabase.ts"
+    "gen": "supabase gen types typescript --linked > src/lib/supabase/types.ts"
   },
   "dependencies": {
     "@next/third-parties": "^14.2.8",
