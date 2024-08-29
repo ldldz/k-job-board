@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { formatSearchString } from "./utils";
 import { Tables } from "@/types/supabase";
 import { revalidatePath } from "next/cache";
@@ -10,13 +10,11 @@ export async function fetchJobs(
   currentPage: number = 1,
 ): Promise<Tables<"job_post_details">[] | null> {
   const supabase = createClient();
-  const PER_PAGE = 10;
-  const SKIP_NUMBER = PER_PAGE * (currentPage - 1);
   let query = supabase
     .from("job_post_details")
     .select("*")
     .eq("is_expired", "false")
-    .range(SKIP_NUMBER, SKIP_NUMBER + PER_PAGE - 1);
+    .range(10 * (currentPage - 1), 10 * currentPage + 10 - 1);
 
   if (searchValue) {
     query = query.textSearch("title", formatSearchString(searchValue));

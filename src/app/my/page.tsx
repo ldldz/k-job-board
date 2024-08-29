@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getBookmarkedJobPosts } from "@/lib/data";
 import { cn, formatDateToKorean } from "@/lib/utils";

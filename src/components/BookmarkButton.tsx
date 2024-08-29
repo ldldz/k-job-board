@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteBookmark, insertBookmark } from "@/lib/data";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { Bookmark } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
