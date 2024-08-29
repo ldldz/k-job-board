@@ -1,5 +1,6 @@
 import JobCard from "@/app/components/JobCard";
-import { fetchJobs, getBookmarks } from "@/lib/data";
+import { getBookmarks } from "@/actions/bookmarks";
+import { getJobPosts } from "@/actions/jobPosts";
 import { Tables } from "@/lib/supabase/types";
 
 export default async function JobCardsList({
@@ -9,7 +10,7 @@ export default async function JobCardsList({
   query: string | string[];
   page: number;
 }) {
-  const jobPosts: Tables<"job_post_details">[] | null = await fetchJobs(query, page);
+  const jobPosts: Tables<"job_post_details">[] | null = await getJobPosts(query, page);
   const bookmarks: Tables<"bookmarks">[] = await getBookmarks();
   const bookmarkedJobPostIDs = bookmarks.map(({ job_post_id }) => job_post_id);
 

@@ -1,4 +1,4 @@
-import { getJobsCount } from "@/lib/data";
+import { getJobPostsCount } from "@/actions/jobPosts";
 import JobCardsList from "./JobCardsList";
 import JobsPagination from "./JobsPagination";
 
@@ -11,7 +11,7 @@ const JobBoard = async ({
 }) => {
   const page = Number(searchParams?.page || 1); // page가 없으면 1
   const query = searchParams?.query || "";
-  const jobsCount: number = (await getJobsCount(query)) || 0;
+  const jobsCount: number = (await getJobPostsCount(query)) || 0;
 
   return (
     <>

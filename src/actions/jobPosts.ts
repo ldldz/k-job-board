@@ -1,11 +1,11 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { formatSearchString } from "./utils";
-import { Tables } from "./supabase/types";
-import { revalidatePath } from "next/cache";
+import { Tables } from "@/lib/supabase/types";
+import { formatSearchString } from "@/lib/utils";
+import { getBookmarks } from "./bookmarks";
 
-export async function fetchJobs(
+export async function getJobPosts(
   searchValue?: string | string[],
   currentPage: number = 1,
 ): Promise<Tables<"job_post_details">[] | null> {
@@ -30,7 +30,7 @@ export async function fetchJobs(
   return data;
 }
 
-export async function getJobsCount(searchValue?: string | string[]): Promise<number | null> {
+export async function getJobPostsCount(searchValue?: string | string[]): Promise<number | null> {
   const supabase = createClient();
   let query = supabase
     .from("job_posts")
@@ -48,47 +48,6 @@ export async function getJobsCount(searchValue?: string | string[]): Promise<num
     throw error;
   }
   return count;
-}
-
-export async function getBookmarks(): Promise<Tables<"bookmarks">[]> {
-  const supabase = createClient();
-  const { data: bookmarks, error } = await supabase.from("bookmarks").select("*");
-
-  if (error) {
-    console.error("Error fetching bookmarks:", error);
-    throw error;
-  }
-
-  return bookmarks;
-}
-
-export async function insertBookmark(jobPostID: string) {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("bookmarks")
-    .insert([{ job_post_id: jobPostID }])
-    .select();
-
-  if (error) {
-    console.error("Error fetching bookmarks:", error);
-    throw error;
-  }
-
-  revalidatePath("/");
-
-  return data;
-}
-
-export async function deleteBookmark(jobPostID: string) {
-  const supabase = createClient();
-
-  const { error } = await supabase.from("bookmarks").delete().eq("job_post_id", jobPostID);
-
-  if (error) {
-    console.error("Error fetching bookmarks:", error);
-    throw error;
-  }
-  revalidatePath("/");
 }
 
 export async function getBookmarkedJobPosts() {

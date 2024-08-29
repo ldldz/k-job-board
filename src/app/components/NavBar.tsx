@@ -9,7 +9,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { signOut } from "../login/actions";
+import { signOut } from "@/actions/auth";
 
 export default async function NavBar() {
   const supabase = createClient();

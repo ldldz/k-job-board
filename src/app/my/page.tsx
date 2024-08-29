@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { getBookmarkedJobPosts } from "@/lib/data";
+import { getBookmarkedJobPosts } from "@/actions/jobPosts";
 import { cn, formatDateToKorean } from "@/lib/utils";
 import BookmarkButton from "@/components/BookmarkButton";
 import Link from "next/link";

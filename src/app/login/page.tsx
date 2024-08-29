@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { signIn } from "./actions";
+import { signIn } from "@/actions/auth";
 import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { redirect } from "next/navigation";
