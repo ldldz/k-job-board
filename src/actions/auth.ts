@@ -1,13 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-
 import { createClient } from "@/lib/supabase/server";
 
-export async function signIn(formData: FormData) {
-  const supabase = createClient();
+const supabase = createClient();
 
-  const { data, error } = await supabase.auth.signInWithOAuth({
+export async function signIn(formData: FormData) {
+  const { data } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
       redirectTo: `${process.env.BASE_URL}/auth/callback`,
@@ -20,8 +19,6 @@ export async function signIn(formData: FormData) {
 }
 
 export async function signOut() {
-  const supabase = createClient();
-
   const {
     data: { session },
   } = await supabase.auth.getSession();

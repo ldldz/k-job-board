@@ -3,13 +3,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { Tables } from "@/lib/supabase/types";
 import { formatSearchString } from "@/lib/utils";
-import { getBookmarks } from "./bookmarks";
+
+const supabase = createClient();
 
 export async function getJobPosts(
   searchValue?: string | string[],
   currentPage: number = 1,
 ): Promise<Tables<"job_post_details">[] | null> {
-  const supabase = createClient();
   let query = supabase
     .from("job_post_details")
     .select("*")
@@ -31,7 +31,6 @@ export async function getJobPosts(
 }
 
 export async function getJobPostsCount(searchValue?: string | string[]): Promise<number | null> {
-  const supabase = createClient();
   let query = supabase
     .from("job_posts")
     .select("*", { count: "exact", head: true })
@@ -50,18 +49,12 @@ export async function getJobPostsCount(searchValue?: string | string[]): Promise
   return count;
 }
 
-export async function getBookmarkedJobPosts() {
-  const supabase = createClient();
-  const bookmarkedJobPostIDs = (await getBookmarks()).map(({ job_post_id }) => job_post_id);
-  const { data, error } = await supabase
-    .from("job_post_details")
-    .select("*")
-    .in("id", bookmarkedJobPostIDs);
-
+export async function getBookmarkedJobPosts(): Promise<Tables<"job_post_details">[]> {
+  const { data, error } = await supabase.from("bookmarks").select("job_post_details(*)");
   if (error) {
     console.error("Error fetching bookmarked job posts:", error);
     throw error;
   }
 
-  return data;
+  return data.map(({ job_post_details }) => job_post_details as Tables<"job_post_details">);
 }
