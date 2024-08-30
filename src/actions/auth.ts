@@ -3,9 +3,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
-const supabase = createClient();
-
 export async function signIn(formData: FormData) {
+  const supabase = createClient();
   const { data } = await supabase.auth.signInWithOAuth({
     provider: "kakao",
     options: {
@@ -19,6 +18,7 @@ export async function signIn(formData: FormData) {
 }
 
 export async function signOut() {
+  const supabase = createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();

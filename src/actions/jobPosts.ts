@@ -4,12 +4,11 @@ import { createClient } from "@/lib/supabase/server";
 import { Tables } from "@/lib/supabase/types";
 import { formatSearchString } from "@/lib/utils";
 
-const supabase = createClient();
-
 export async function getJobPosts(
   searchValue?: string | string[],
   currentPage: number = 1,
 ): Promise<Tables<"job_post_details">[] | null> {
+  const supabase = createClient();
   let query = supabase
     .from("job_post_details")
     .select("*")
@@ -31,6 +30,7 @@ export async function getJobPosts(
 }
 
 export async function getJobPostsCount(searchValue?: string | string[]): Promise<number | null> {
+  const supabase = createClient();
   let query = supabase
     .from("job_posts")
     .select("*", { count: "exact", head: true })
@@ -50,6 +50,7 @@ export async function getJobPostsCount(searchValue?: string | string[]): Promise
 }
 
 export async function getBookmarkedJobPosts(): Promise<Tables<"job_post_details">[]> {
+  const supabase = createClient();
   const { data, error } = await supabase.from("bookmarks").select("job_post_details(*)");
   if (error) {
     console.error("Error fetching bookmarked job posts:", error);
