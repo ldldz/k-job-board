@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen": "supabase gen types typescript --linked > src/lib/supabase/types.ts"
+    "gen": "supabase gen types typescript --linked > src/lib/supabase/types.ts",
+    "format": "npx prettier --write --cache ."
   },
   "dependencies": {
     "@next/third-parties": "^14.2.8",
