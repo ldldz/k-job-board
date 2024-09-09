@@ -1,0 +1,1 @@
+npm run lint   # lint가 실패하면 커밋이 중단됨
