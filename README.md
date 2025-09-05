@@ -8,6 +8,3 @@
 - 로그인 후 채용공고 북마크
 - **Next.js**, **Supabase**, **TypeScript**, **Tailwind CSS** 기반으로 개발
 
-## Getting Started
-
-- 배포 링크: https://www.careerlib.co.kr/
